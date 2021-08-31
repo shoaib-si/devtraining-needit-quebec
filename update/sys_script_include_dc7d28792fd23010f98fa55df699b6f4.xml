@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_58872_needit.NeedItUtils</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description>Common utiity functions for NeedIt application</description>
+        <name>NeedItUtils</name>
+        <script><![CDATA[var NeedItUtils = Class.create();
+NeedItUtils.prototype = {
+    initialize: function() {
+    },
+	
+	verifyDate: function(whenNeeded){
+		var rightnow = new GlideDateTime();
+	// Create a GlideDateTime object for the When needed date
+	
+	// If the When needed date is before rightnow, do not write the record to the database
+	// Output an error message to the screen
+	if(whenNeeded.before(rightnow)){
+		gs.addErrorMessage("When needed date cannot be in the past.  Your request has not been saved to the database.");
+		return false;
+	}
+	
+	// If the When needed date is same day request, do not write the record to the database
+	// Output an error message to the screen
+	var today = rightnow.getLocalDate();
+	var istoday = whenNeeded.getLocalDate();
+	// Compare today and istoday to see if they are the same day
+	if(today.compareTo(istoday) == 0){
+		gs.addErrorMessage("Same day requests are not allowed. Please select a date after today.");
+		return false;
+	}
+		return true;
+	},
+
+    type: 'NeedItUtils'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-08-31 09:46:30</sys_created_on>
+        <sys_id>dc7d28792fd23010f98fa55df699b6f4</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>NeedItUtils</sys_name>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sys_script_include_dc7d28792fd23010f98fa55df699b6f4</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-08-31 09:46:30</sys_updated_on>
+    </sys_script_include>
+</record_update>
